@@ -80,10 +80,16 @@ public class LoginActivity extends AppCompatActivity {
                     manualInput = new Intent(this, ManLoginActivity.class);
                     manualInput.putExtra("username", input);
                     toSpeech.speak( "your email is " + input,TextToSpeech.QUEUE_FLUSH,null);
-
-                     startActivityForResult(speechIntent, 11);
+                    
                     MediaPlayer mp = MediaPlayer.create(this, R.raw.enter_passwordv);
                     mp.start();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override 
+                        public void run() { 
+                            startActivityForResult(speechIntent, 11); 
+                        } 
+                    }, 5000);
                 }
 
                 break;
