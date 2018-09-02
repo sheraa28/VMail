@@ -138,7 +138,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
             if (resultCode == RESULT_OK && null != data) {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 if (result.get(0).equals("cancel")) {
@@ -238,7 +237,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
             }
-        }
     }
     public void orType(View view)
     {
