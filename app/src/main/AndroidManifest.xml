@@ -21,10 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".DashActivity" />
         <activity
             android:name=".ManLoginActivity"
-            android:label="@string/title_activity_man_login"></activity>
+            android:label="@string/title_activity_man_login" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
