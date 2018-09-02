@@ -107,11 +107,6 @@ public class ManLoginActivity extends AppCompatActivity implements LoaderCallbac
             if (intent.hasExtra("password")) {
                 passEditText.setText(intent.getStringExtra("password"));
             }
-
-            {
-                Intent loginIntent = new Intent(this, DashActivity.class);
-                startActivity(loginIntent);
-            }
     }
 
     private void populateAutoComplete() {
