@@ -1,7 +1,6 @@
 package com.example.parmindersingh.vmail;
 
 import android.graphics.Paint;
-import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
@@ -22,6 +21,7 @@ import java.util.Locale;
 public class LoginActivity extends AppCompatActivity {
 
     Intent manualInput;
+    Intent manual2Input;
     Intent speechIntent;
     TextToSpeech toSpeech;
     EditText editText;
@@ -153,24 +153,26 @@ public class LoginActivity extends AppCompatActivity {
                                     public void run() {
                                         startActivityForResult(speechIntent, 10);
                                     }
-                                }, 4000);
+                                }, 2000);
 
 
                             } else if (result.get(0).equals("register")) {
 
-                                speak("starting new registration of an account");
+                                speak("starting new registration of an account. What is your full name?");
                                 new Handler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-
+                                        startActivityForResult(speechIntent,20);
                                     }
-                                }, 4000);
+                                }, 5000);
 
+                            } else if (result.get(0) == null) {
+
+                                startActivityForResult(speechIntent,1);
                             }
-                            break;
+                                break;
                         case 10:
                             if (resultCode == RESULT_OK && data != null) {
-                                //ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                                 String input = ((result.get(0)).replace(" ", "")).trim();
                                 manualInput = new Intent(this, ManLoginActivity.class);
                                 manualInput.putExtra("username", input);
@@ -198,7 +200,6 @@ public class LoginActivity extends AppCompatActivity {
                             break;
                         case 11:
                             if (resultCode == RESULT_OK && data != null) {
-                                //ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                                 String input = ((result.get(0)).replace(" ", "")).trim();
 
                                 manualInput.putExtra("password", input);
@@ -208,30 +209,144 @@ public class LoginActivity extends AppCompatActivity {
                             break;
                         case 20:
                             if (resultCode == RESULT_OK && data != null) {
-                                //ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                                String input = (result.get(0));
-                                manualInput = new Intent(this, RegisterActivity.class);
-                                manualInput.putExtra("username", input);
-                                toSpeech.speak("your email is " + input, TextToSpeech.QUEUE_FLUSH, null);
+                                final String input = (result.get(0));
+                                manual2Input = new Intent(this, RegisterActivity.class);
+                                manual2Input.putExtra("Full name", input);
+                                toSpeech.speak("the name is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
 
-                                      speak("tell me your full name");
+                                      speak("what is your email ID" );
                                     }
-                                }, 5000);
+                                }, 2000);
 
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         startActivityForResult(speechIntent, 21);
                                     }
-                                }, 8000);
+                                }, 4000);
                             }
                             break;
                         case 21:
+                            if (resultCode == RESULT_OK && data != null) {
+                                String input = (result.get(0));
+                                manual2Input = new Intent(this, RegisterActivity.class);
+                                manual2Input.putExtra("email", input);
+                                toSpeech.speak("the email is  " + input , TextToSpeech.QUEUE_FLUSH, null);
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        speak("what is your contact number");
+                                    }
+                                }, 2000);
+
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivityForResult(speechIntent, 22);
+                                    }
+                                }, 4000);
+                            }
+                            break;
+
+                        case 22:
+                            if (resultCode == RESULT_OK && data != null) {
+                                String input = (result.get(0));
+                                manual2Input = new Intent(this, RegisterActivity.class);
+                                manual2Input.putExtra("contact", input);
+                                toSpeech.speak("the contact number is  " + input , TextToSpeech.QUEUE_FLUSH, null);
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        speak("what is your password");
+                                    }
+                                }, 3000);
+
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivityForResult(speechIntent, 23);
+                                    }
+                                }, 5000);
+                            }
+                            break;
+                        case 23:
+                            if (resultCode == RESULT_OK && data != null) {
+                                String input = (result.get(0));
+                                manual2Input = new Intent(this, RegisterActivity.class);
+                                manual2Input.putExtra("password", input);
+                                //toSpeech.speak("the name you entered is  " + input , TextToSpeech.QUEUE_FLUSH, null);
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        speak("say the password again to confirm");
+                                    }
+                                }, 2000);
+
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivityForResult(speechIntent, 24);
+                                    }
+                                }, 5000);
+                            }
+                            break;
+                        case 24:
+                            if (resultCode == RESULT_OK && data != null) {
+                                String input = (result.get(0));
+                                manual2Input = new Intent(this, RegisterActivity.class);
+                                manual2Input.putExtra("cnfpassword", input);
+                                //toSpeech.speak("the name you entered is  " + input , TextToSpeech.QUEUE_FLUSH, null);
+
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        speak("say 'YES' to continue or 'NO' to enter the details again");
+                                    }
+                                }, 2000);
+
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivityForResult(speechIntent, 25);
+                                    }
+                                }, 5000);
+                            }
+                            break;
+                        case 25:
+                            if (result.get(0).equals("yes")) {
+                                speak("registering your new account");
+
+                                startActivity(manual2Input);
+
+
+                            } else if (result.get(0).equals("no")) {
+
+                                speak("Enter the details again. What is your full name");
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivityForResult(speechIntent,20);
+                                    }
+                                }, 2000);
+
+                            }
+                            break;
 
                     }
 
