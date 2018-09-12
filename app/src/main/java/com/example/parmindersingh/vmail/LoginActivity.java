@@ -71,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             speak("Your Device Don't Support Speech Input");
         }
+        
+        manual2Input = new Intent(this, RegisterActivity.class);
 
     }
     private void speak(String text){
@@ -210,7 +212,6 @@ public class LoginActivity extends AppCompatActivity {
                         case 20:
                             if (resultCode == RESULT_OK && data != null) {
                                 final String input = (result.get(0));
-                                manual2Input = new Intent(this, RegisterActivity.class);
                                 manual2Input.putExtra("Full name", input);
                                 toSpeech.speak("the name is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
@@ -234,7 +235,6 @@ public class LoginActivity extends AppCompatActivity {
                         case 21:
                             if (resultCode == RESULT_OK && data != null) {
                                 String input = (result.get(0));
-                                manual2Input = new Intent(this, RegisterActivity.class);
                                 manual2Input.putExtra("email", input);
                                 toSpeech.speak("the email is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
@@ -259,7 +259,6 @@ public class LoginActivity extends AppCompatActivity {
                         case 22:
                             if (resultCode == RESULT_OK && data != null) {
                                 String input = (result.get(0));
-                                manual2Input = new Intent(this, RegisterActivity.class);
                                 manual2Input.putExtra("contact", input);
                                 toSpeech.speak("the contact number is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
@@ -283,7 +282,6 @@ public class LoginActivity extends AppCompatActivity {
                         case 23:
                             if (resultCode == RESULT_OK && data != null) {
                                 String input = (result.get(0));
-                                manual2Input = new Intent(this, RegisterActivity.class);
                                 manual2Input.putExtra("password", input);
                                 //toSpeech.speak("the name you entered is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
@@ -307,7 +305,6 @@ public class LoginActivity extends AppCompatActivity {
                         case 24:
                             if (resultCode == RESULT_OK && data != null) {
                                 String input = (result.get(0));
-                                manual2Input = new Intent(this, RegisterActivity.class);
                                 manual2Input.putExtra("cnfpassword", input);
                                 //toSpeech.speak("the name you entered is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
