@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent.hasExtra("fullname")) {
-            fullName.setText(intent.getStringExtra("fullame"));
+            fullName.setText(intent.getStringExtra("fullname"));
         }
         if (intent.hasExtra("email")) {
             userEmailId.setText(intent.getStringExtra("email"));
