@@ -54,9 +54,9 @@ public class RegisterActivity extends AppCompatActivity {
         if (intent.hasExtra("email")) {
             userEmailId.setText(intent.getStringExtra("email"));
         }
-        /*if (intent.hasExtra("contact")) {
-            contact.setText(intent.getStringExtra("contact"));
-        }*/
+        if (intent.hasExtra("contact")) {
+            mobileNumber.setText(intent.getStringExtra("contact"));
+        }
         if (intent.hasExtra("password")) {
             password.setText(intent.getStringExtra("password"));
         }
