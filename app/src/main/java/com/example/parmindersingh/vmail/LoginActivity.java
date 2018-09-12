@@ -209,7 +209,8 @@ public class LoginActivity extends AppCompatActivity {
                             break;
                         case 20:
                             if (resultCode == RESULT_OK && data != null) {
-                                final String input = (result.get(0));
+                                String input = result.get(0);
+                                Log.d("Debug", "Full Name: " + input);
                                 manual2Input.putExtra("fullname", input);
                                 toSpeech.speak("the name is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
