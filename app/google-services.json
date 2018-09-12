@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1035895160095",
+    "firebase_url": "https://vmail-c229b.firebaseio.com",
+    "project_id": "vmail-c229b",
+    "storage_bucket": "vmail-c229b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1035895160095:android:a97f1ec4902bdbc3",
+        "android_client_info": {
+          "package_name": "com.example.parmindersingh.vmail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1035895160095-3o1puo9bfh1a7jhv7fnjqpdfbch5ggok.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAe8Qie2rKVk1VD0Vvs9-sgHet866u8Dw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

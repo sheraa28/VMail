@@ -48,8 +48,8 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         Intent intent = getIntent();
-        if (intent.hasExtra("Full name")) {
-            fullName.setText(intent.getStringExtra("Full name"));
+        if (intent.hasExtra("fullname")) {
+            fullName.setText(intent.getStringExtra("fullame"));
         }
         if (intent.hasExtra("email")) {
             userEmailId.setText(intent.getStringExtra("email"));

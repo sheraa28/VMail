@@ -8,9 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -212,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                         case 20:
                             if (resultCode == RESULT_OK && data != null) {
                                 final String input = (result.get(0));
-                                manual2Input.putExtra("Full name", input);
+                                manual2Input.putExtra("fullname", input);
                                 toSpeech.speak("the name is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
                                 Handler handler = new Handler();
