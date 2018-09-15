@@ -46,6 +46,9 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        
+        // BC Method banaya he toh call bhi karle.
+        findViews();
 
         Intent intent = getIntent();
         if (intent.hasExtra("fullname")) {
