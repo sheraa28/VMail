@@ -26,7 +26,9 @@
         <activity
             android:name=".ManLoginActivity"
             android:label="@string/title_activity_man_login" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity">
+            android:label="Registration"
+        </activity>
     </application>
 
 </manifest>

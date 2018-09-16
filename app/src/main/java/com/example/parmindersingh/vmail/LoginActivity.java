@@ -11,9 +11,11 @@ import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 
@@ -26,14 +28,19 @@ public class LoginActivity extends AppCompatActivity {
     EditText editText;
     String text;
     TextView textView;
+    ImageView imageView;
     int result;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        /*MediaPlayer mp = MediaPlayer.create(this, R.raw.click_anywhere_v);
-        mp.start();*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        TextView textView = (TextView) findViewById(R.id.textView);
+        TextView textView2 = (TextView) findViewById(R.id.textView2);
+        textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
 
         toSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -52,8 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        TextView textView = (TextView) findViewById(R.id.textView2);
-        textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -85,8 +90,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void getSpeechInput(View view) {
-        /*final MediaPlayer mp = MediaPlayer.create(this, R.raw.enter_email);
-        mp.start();*/
+
+        imageView=(ImageView) findViewById(R.id.imageView);
+
         speak("Login or register?");
         speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -102,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             speak("your device does not support speech input");
         }
-        editText=(EditText) findViewById(R.id.emailEditText);
+        //editText=(EditText) findViewById(R.id.emailEditText);
         toSpeech=new TextToSpeech(LoginActivity.this, new TextToSpeech.OnInitListener() {
         @Override
         public void onInit(int status) {
@@ -135,10 +141,12 @@ public class LoginActivity extends AppCompatActivity {
         this.finishAffinity();
     }
 
-
+    String passCnf = null;
+    String cnfPass = null;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
             if (resultCode == RESULT_OK && null != data) {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 if (result.get(0).equals("cancel")) {
@@ -167,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }, 5000);
 
-                            } else if (result.get(0) == null) {
+                            } else if (result.get(0).equals("")) {
 
                                 startActivityForResult(speechIntent,1);
                             }
@@ -180,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
                                 toSpeech.speak("your email is " + input, TextToSpeech.QUEUE_FLUSH, null);
 
                                 Handler handler = new Handler();
-                                //final MediaPlayer mp = MediaPlayer.create(this, R.raw.enter_passwordv);
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -234,7 +241,7 @@ public class LoginActivity extends AppCompatActivity {
                             break;
                         case 21:
                             if (resultCode == RESULT_OK && data != null) {
-                                String input = (result.get(0));
+                                String input = ((result.get(0)).replace(" ", "")).trim();
                                 manual2Input.putExtra("email", input);
                                 toSpeech.speak("the email is  " + input , TextToSpeech.QUEUE_FLUSH, null);
 
@@ -243,47 +250,25 @@ public class LoginActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
 
-                                        speak("what is your contact number");
+                                        speak("what should be the password ");
                                     }
-                                }, 2000);
+                                }, 5000);
 
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
                                         startActivityForResult(speechIntent, 22);
                                     }
-                                }, 4000);
+                                }, 6500);
                             }
                             break;
 
                         case 22:
-                            if (resultCode == RESULT_OK && data != null) {
-                                String input = (result.get(0));
-                                manual2Input.putExtra("contact", input);
-                                toSpeech.speak("the contact number is  " + input , TextToSpeech.QUEUE_FLUSH, null);
-
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        speak("what is your password");
-                                    }
-                                }, 3000);
-
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivityForResult(speechIntent, 23);
-                                    }
-                                }, 5000);
-                            }
-                            break;
-                        case 23:
-                            if (resultCode == RESULT_OK && data != null) {
-                                String input = (result.get(0));
+                          if (resultCode == RESULT_OK && data != null) {
+                                String input = ((result.get(0)).replace(" ", "")).trim();
                                 manual2Input.putExtra("password", input);
-                                //toSpeech.speak("the name you entered is  " + input , TextToSpeech.QUEUE_FLUSH, null);
+                                passCnf= input.toString();
+                                //speak("the password is" + input);
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -297,35 +282,49 @@ public class LoginActivity extends AppCompatActivity {
                                 handler.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivityForResult(speechIntent, 24);
+                                        startActivityForResult(speechIntent, 23);
                                     }
                                 }, 5000);
+                            }
+                            break;
+                        case 23:
+                            if (resultCode == RESULT_OK && data != null) {
+                                String input = ((result.get(0)).replace(" ", "")).trim();
+                                manual2Input.putExtra("cnfpassword", input);
+                                cnfPass= input.toString();
+                                //speak("the confirm password is" + input);
+                                if (cnfPass == passCnf) {
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            speak("say YES to continue or 'NO' to enter the details again");
+                                        }
+                                    }, 4000);
+
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startActivityForResult(speechIntent, 24);
+                                        }
+                                    }, 7000);
+                                }
+                                else {
+                                    speak("Passwords did not match. Please say the password again");
+
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startActivityForResult(speechIntent, 22);
+                                        }
+                                    }, 3000);
+
+
+                                }
                             }
                             break;
                         case 24:
-                            if (resultCode == RESULT_OK && data != null) {
-                                String input = (result.get(0));
-                                manual2Input.putExtra("cnfpassword", input);
-                                //toSpeech.speak("the name you entered is  " + input , TextToSpeech.QUEUE_FLUSH, null);
-
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        speak("say 'YES' to continue or 'NO' to enter the details again");
-                                    }
-                                }, 2000);
-
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivityForResult(speechIntent, 25);
-                                    }
-                                }, 5000);
-                            }
-                            break;
-                        case 25:
                             if (result.get(0).equals("yes")) {
                                 speak("registering your new account");
 
@@ -342,6 +341,8 @@ public class LoginActivity extends AppCompatActivity {
                                     }
                                 }, 2000);
 
+                            }else {
+                                startActivityForResult(speechIntent, 24);
                             }
                             break;
 

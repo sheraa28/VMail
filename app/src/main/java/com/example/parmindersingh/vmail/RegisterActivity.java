@@ -12,7 +12,6 @@ import android.widget.TextView;
 public class RegisterActivity extends AppCompatActivity {
     private EditText fullName;
     private EditText userEmailId;
-    private EditText mobileNumber;
     private ProgressBar progressBar;
     private EditText password;
     private EditText confirmPassword;
@@ -23,9 +22,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void findViews() {
         fullName = (EditText)findViewById( R.id.fullName );
         userEmailId = (EditText)findViewById( R.id.email );
-        mobileNumber = (EditText)findViewById( R.id.contact );
         progressBar = (ProgressBar)findViewById( R.id.progressBar );
-        password = (EditText)findViewById( R.id.password );
+        password = (EditText)findViewById( R.id.Password );
         confirmPassword = (EditText)findViewById( R.id.cnfPassword );
         Register = (Button)findViewById( R.id.Register );
         alreadyUser = (TextView)findViewById( R.id.already_user );
@@ -56,9 +54,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if (intent.hasExtra("email")) {
             userEmailId.setText(intent.getStringExtra("email"));
-        }
-        if (intent.hasExtra("contact")) {
-            mobileNumber.setText(intent.getStringExtra("contact"));
         }
         if (intent.hasExtra("password")) {
             password.setText(intent.getStringExtra("password"));

@@ -77,7 +77,7 @@ public class ManLoginActivity extends AppCompatActivity implements LoaderCallbac
 
 
         emailEditText = (EditText) findViewById(R.id.emailEditText);
-        passEditText = (EditText) findViewById(R.id.password);
+        passEditText = (EditText) findViewById(R.id.passEditText);
        /* passEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
