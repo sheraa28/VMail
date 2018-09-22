@@ -50,22 +50,28 @@
         android:maxLines="1"
         android:singleLine="true" />
 
-    <EditText
-        android:id="@+id/passEditText"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="299dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/textView4"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="176dp"
-        android:layout_weight="2"
-        android:drawableLeft="@drawable/ic_action_password"
-        android:hint="Password"
-        android:imeActionId="6"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionUnspecified"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:singleLine="true" />
+        app:passwordToggleEnabled="true">>
+
+        <EditText
+            android:id="@+id/passEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:imeActionId="6"
+            android:drawableStart="@drawable/ic_action_password"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
 
     <Button

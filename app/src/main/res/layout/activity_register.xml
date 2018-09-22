@@ -47,17 +47,6 @@
         android:layout_width="fill_parent"
         android:layout_height="2px"/>
 
-    <EditText
-        android:id="@+id/contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_action_phone"
-        android:ems="10"
-        android:hint="Contact No"
-        android:inputType="number" />
-
-
-
 
     <View
         android:layout_width="fill_parent"
@@ -73,30 +62,47 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="1px" />
-
-    <EditText
-        android:id="@+id/Password"
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:drawableLeft="@drawable/ic_action_password"
-        android:inputType="textPassword" />
+        app:passwordToggleEnabled="true">>
 
-    <View
-    android:layout_width="fill_parent"
-    android:layout_height="2px" />
-    <EditText
-        android:id="@+id/cnfPassword"
+        <EditText
+            android:id="@+id/Password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:imeActionId="6"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:drawableStart="@drawable/ic_action_password"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:drawableLeft="@drawable/ic_action_password"
-        android:inputType="textPassword" />
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2px" />
+        app:passwordToggleEnabled="true">>
+
+        <EditText
+            android:id="@+id/cnfPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_action_password"
+            android:hint="Confirm Passworsd"
+            android:imeActionId="6"
+            android:imeActionLabel="@string/action_sign_in_short"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+    </android.support.design.widget.TextInputLayout>
+
+
+
 
     <Button
         android:id="@+id/Register"

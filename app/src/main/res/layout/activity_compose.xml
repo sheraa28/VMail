@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/holo_blue_light"
+    android:onClick="speech"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:background="#e8e8e7"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginLeft="25dp"
+            android:text="Current Status"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/graybackground"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="type"
+            android:text="Type"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/loginpic" />
+
+        <TextView
+            android:id="@+id/to"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="30dp"
+            android:background="#f3f3f3"
+            android:hint="To:"
+            android:paddingLeft="7dp"
+            android:paddingTop="7dp"
+            android:textColorHint="@android:color/holo_red_dark" />
+
+        <TextView
+            android:id="@+id/subject"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:background="#f3f3f3"
+            android:hint="Subject:"
+            android:paddingLeft="7dp"
+            android:paddingTop="7dp"
+            android:textColorHint="@android:color/holo_red_dark" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="fill_parent"
+            android:layout_height="130dp"
+            android:layout_marginTop="15dp"
+            android:background="#f3f3f3"
+            android:hint="Message:"
+            android:paddingLeft="7dp"
+            android:paddingTop="7dp"
+            android:textColorHint="@android:color/holo_red_dark" />
+
+        <Button
+            android:layout_width="190dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn"
+            android:onClick="sendemail"
+            android:text="submit" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+
+</LinearLayout>
