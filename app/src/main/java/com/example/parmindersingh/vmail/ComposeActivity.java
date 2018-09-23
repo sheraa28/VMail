@@ -1,8 +1,10 @@
 package com.example.parmindersingh.vmail;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
@@ -11,7 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +33,8 @@ public class ComposeActivity extends AppCompatActivity {
     private int numberOfClicks;
     private Layout linearLayout;
     Intent speechIntent;
+    private TextView type;
+    private Button sendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,7 @@ public class ComposeActivity extends AppCompatActivity {
         To = (TextView) findViewById(R.id.to);
         Subject  =(TextView)findViewById(R.id.subject);
         Message = (TextView) findViewById(R.id.message);
+        sendButton =(Button)findViewById(R.id.send);
         //linearLayout layout = (LinearLayout) findViewById(linearLayout);
         numberOfClicks = 0;
 
@@ -70,13 +79,32 @@ public class ComposeActivity extends AppCompatActivity {
         } else {
             speak("Your Device Don't Support Speech Input");
         }
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutClicked();
+            }
+        });
     }
 
     public void type (View view){
 
-    LinearLayout L1 = (LinearLayout) findViewById(R.id.linearLayout);
+     type = (TextView)findViewById(R.id.edtType);
+      String Type = type.getText().toString();
 
-        Toast.makeText(this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
+      if (Type.equals("TYPE")) {
+        sendButton.setOnClickListener(null);
+         type.setText("SPEAK");
+          Toast.makeText(this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
+      }else {
+          sendButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  layoutClicked();
+              }
+          });
+          type.setText("TYPE");
+      }
 
     }
 
@@ -99,7 +127,28 @@ public class ComposeActivity extends AppCompatActivity {
     }
 
     public void speech(View view){
-        layoutClicked();
+
+        //layoutClicked();
+    }
+
+    // Tap outside of components to remove focus
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    layoutClicked();
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     public void layoutClicked()
@@ -120,10 +169,7 @@ public class ComposeActivity extends AppCompatActivity {
             speak("your device does not support speech input");
         }
     }
-    public void sendemail(View view){
 
-        sendEmail();
-    }
     private void listen(){
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
