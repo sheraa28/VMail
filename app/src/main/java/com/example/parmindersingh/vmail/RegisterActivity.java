@@ -47,25 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     }
-
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        switch (view.getId())
-        {
-            case R.drawable.ic_action_passwordtoggle:
-
-                switch ( motionEvent.getAction() ) {
-                    case MotionEvent.ACTION_DOWN:
-                        userPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        userPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-
-                        break;
-                }
-                break;
-        }
-        return true;
-    }
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
