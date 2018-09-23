@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,10 +25,8 @@ public class ComposeActivity extends AppCompatActivity {
     private TextView status;
     private TextView To,Subject,Message;
     private int numberOfClicks;
+    private Layout linearLayout;
     Intent speechIntent;
-    private LinearLayout layout;
-    private Button send;
-    private TextView type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +53,8 @@ public class ComposeActivity extends AppCompatActivity {
         To = (TextView) findViewById(R.id.to);
         Subject  =(TextView)findViewById(R.id.subject);
         Message = (TextView) findViewById(R.id.message);
-        layout = (LinearLayout) findViewById(R.id.linearLayout);
-        send = (Button) findViewById(R.id.send);
-        type = (TextView) findViewById(R.id.edtType);
-
+        //linearLayout layout = (LinearLayout) findViewById(linearLayout);
+        numberOfClicks = 0;
 
         speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -75,43 +70,13 @@ public class ComposeActivity extends AppCompatActivity {
         } else {
             speak("Your Device Don't Support Speech Input");
         }
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layoutClicked();
-            }
-        });
-        send.setOnClickListener(null);
     }
 
     public void type (View view){
-        String edtTxt = type.getText().toString();
 
-        if(edtTxt.equals("TYPE") ) {
-            layout.setOnClickListener(null);
-            send.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendEmail();
-                }
-            });
-            type.setText("SPEAK");
+    LinearLayout L1 = (LinearLayout) findViewById(R.id.linearLayout);
 
-
-            Toast.makeText(ComposeActivity.this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
-        }else {
-            type.setText("TYPE");
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    layoutClicked();
-                    Toast.makeText(ComposeActivity.this, "Voice Interaction Enabled!", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-
-        }
+        Toast.makeText(this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -133,6 +98,10 @@ public class ComposeActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    public void speech(View view){
+        layoutClicked();
+    }
+
     public void layoutClicked()
     {
         speak("tell me the email ID to whom you want to send mail");
@@ -149,6 +118,22 @@ public class ComposeActivity extends AppCompatActivity {
 
         } else {
             speak("your device does not support speech input");
+        }
+    }
+    public void sendemail(View view){
+
+        sendEmail();
+    }
+    private void listen(){
+        Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        i.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something");
+
+        try {
+            startActivityForResult(i, 100);
+        } catch (ActivityNotFoundException a) {
+            Toast.makeText(this, "Your device doesn't support Speech Recognition", Toast.LENGTH_SHORT).show();
         }
     }
 
