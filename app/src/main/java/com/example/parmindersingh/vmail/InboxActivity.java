@@ -3,9 +3,11 @@ package com.example.parmindersingh.vmail;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -24,6 +26,11 @@ public class InboxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inbox);
 
         emailList=(ListView)findViewById(R.id.emailListView);
+        final ArrayList<String>inboxMails=new ArrayList<String>();
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,inboxMails);
+        emailList.setAdapter(arrayAdapter);
+
 
 
     }
@@ -57,13 +64,12 @@ public class InboxActivity extends AppCompatActivity {
             catch (MessagingException e) {e.printStackTrace();}
             catch (IOException e) {e.printStackTrace();}
         }
-
+    SharedPreferences sp1= InboxActivity.this.getSharedPreferences("Login",0);
+    String unm=sp1.getString("Unm", null);
+    String pass = sp1.getString("Psw", null);
 
 
         public void main(String[] args) {
-            SharedPreferences sp1= InboxActivity.this.getSharedPreferences("Login",0);
-            String unm=sp1.getString("Unm", null);
-            String pass = sp1.getString("Psw", null);
 
             String host = "mail.javatpoint.com";//change accordingly
             String mailStoreType = "pop3";
