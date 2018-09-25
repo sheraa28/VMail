@@ -1,7 +1,10 @@
 package com.example.parmindersingh.vmail;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ListView;
+
 import java.io.IOException;
 import java.util.Properties;
 import javax.mail.Folder;
@@ -13,10 +16,16 @@ import com.sun.mail.pop3.POP3Store;
 
 public class InboxActivity extends AppCompatActivity {
 
+    private ListView emailList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
+
+        emailList=(ListView)findViewById(R.id.emailListView);
+
+
     }
 
         public static void receiveEmail(String pop3Host, String storeType, String user, String password) {
@@ -49,12 +58,17 @@ public class InboxActivity extends AppCompatActivity {
             catch (IOException e) {e.printStackTrace();}
         }
 
-        public static void main(String[] args) {
+
+
+        public void main(String[] args) {
+            SharedPreferences sp1= InboxActivity.this.getSharedPreferences("Login",0);
+            String unm=sp1.getString("Unm", null);
+            String pass = sp1.getString("Psw", null);
 
             String host = "mail.javatpoint.com";//change accordingly
             String mailStoreType = "pop3";
-            String username= "sonoojaiswal@javatpoint.com";
-            String password= "xxxxx";//change accordingly
+            String username= unm;
+            String password= pass;//change accordingly
 
             receiveEmail(host, mailStoreType, username, password);
 

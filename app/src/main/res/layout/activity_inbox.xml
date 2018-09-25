@@ -7,4 +7,8 @@
     tools:context=".InboxActivity">
 
 
+    <ListView
+        android:id="@+id/emailListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

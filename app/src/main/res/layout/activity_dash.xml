@@ -24,10 +24,9 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton4"
+                android:id="@+id/composeBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:onClick="Compose"
                 android:src="@drawable/composeimg" />
         </LinearLayout>
 
@@ -41,7 +40,7 @@
             android:background="#ff8000">
 
             <ImageButton
-                android:id="@+id/imageButton5"
+                android:id="@+id/inboxBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/inboximg" />
@@ -65,7 +64,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton9"
+                android:id="@+id/sentMailBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/sentmailimg" />
@@ -81,7 +80,7 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/imageButton7"
+                android:id="@+id/trashBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/trashimg" />

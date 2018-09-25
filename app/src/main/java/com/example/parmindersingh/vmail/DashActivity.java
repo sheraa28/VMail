@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -18,17 +19,18 @@ public class DashActivity extends AppCompatActivity {
 
     private TextToSpeech tts;
     Intent speechIntent;
-
-    public  void Compose(View view){
-
-        compose();
-    }
+    private ImageButton composeBtn,inboxBtn,sentMailBtn,trashBtn;
 
     public void compose() {
 
         Intent intent = new Intent(this, ComposeActivity.class);
         startActivity(intent);
 
+    }
+    public void inbox(){
+
+        Intent intent = new Intent(this, InboxActivity.class);
+        startActivity(intent);
     }
 
    /* SharedPreferences sp1 = this.getSharedPreferences("Register",0);
@@ -38,6 +40,25 @@ public class DashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash);
+
+        composeBtn = (ImageButton)findViewById(R.id.composeBtn);
+        inboxBtn = (ImageButton)findViewById(R.id.inboxBtn);
+        sentMailBtn=(ImageButton)findViewById(R.id.sentMailBtn);
+        trashBtn= (ImageButton)findViewById(R.id.trashBtn);
+
+        composeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                compose();
+            }
+        });
+
+        inboxBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inbox();
+            }
+        });
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
