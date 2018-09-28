@@ -36,7 +36,11 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView imageView;
 
 
-    private void findViews() {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_register);
+
         fullName = (EditText)findViewById( R.id.fullName );
         userEmailId = (EditText)findViewById( R.id.email );
         progressBar = (ProgressBar)findViewById( R.id.progressBar );
@@ -45,17 +49,6 @@ public class RegisterActivity extends AppCompatActivity {
         Register = (Button)findViewById( R.id.Register );
         alreadyUser = (TextView)findViewById( R.id.already_user );
 
-
-    }
-    
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        
-        // BC Method banaya he toh call bhi karle.
-        findViews();
 
         Intent intent = getIntent();
         if (intent.hasExtra("fullname")) {

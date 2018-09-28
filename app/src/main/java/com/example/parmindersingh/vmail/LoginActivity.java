@@ -126,18 +126,56 @@ public class LoginActivity extends AppCompatActivity {
         this.finishAffinity();
     }
 
+    public void restartActivity(){
+        Intent mIntent = getIntent();
+        finish();
+        startActivity(mIntent);
+    }
+
     String passCnf = null;
     String cnfPass = null;
+
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 8;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
             if (resultCode == RESULT_OK && null != data) {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if (result.get(0).equals("cancel")) {
-                    speak("Cancelled!");
+                if (result.get(0).equals("exit")) {
+                    speak("Exiting from the application");
                     exitFromApp();
-                } else {
+                }else if (result.get(0).equals("restart")){
+                    speak("restarting");
+                    restartActivity();
+                }
+                else if (result.get(0).equals("Restart login")) {
+                    speak("Restarting login, tell me your email ID");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivityForResult(speechIntent, 10);
+                        }
+                    }, 3000);
+                }
+                else if (result.get(0).equals("Restart registration"))  {
+                        speak("Restarting the registration, What is your full name");
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivityForResult(speechIntent, 20);
+                            }
+                        }, 3000);
+                }
+                else {
                     switch (requestCode) {
                         case 1:
                             if (result.get(0).equals("login")) {
@@ -270,7 +308,7 @@ public class LoginActivity extends AppCompatActivity {
                                     public void run() {
                                         startActivityForResult(speechIntent, 22);
                                     }
-                                }, 6500);
+                                }, 2000);
                             }
                             break;
 
@@ -279,8 +317,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String input = ((result.get(0)).toLowerCase().replace(" ", "")).trim();
                                 manual2Input.putExtra("password", input);
                                 passCnf= input.toString();
-                                //toSpeech.speak("the password is  " + passCnf , TextToSpeech.QUEUE_FLUSH, null);
-                                Log.i("Password","password is"+passCnf);
+
 
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
@@ -304,8 +341,6 @@ public class LoginActivity extends AppCompatActivity {
                                 String input = ((result.get(0)).toLowerCase().replace(" ", "")).trim();
                                 manual2Input.putExtra("cnfpassword", input);
                                 cnfPass = input.toString();
-                               // toSpeech.speak("the confirmation password is  " + cnfPass , TextToSpeech.QUEUE_FLUSH, null);
-                                Log.i("cnfPassword","Confirm password is"+cnfPass);
                                 if (cnfPass.equals( passCnf)) {
                                     Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
@@ -321,7 +356,7 @@ public class LoginActivity extends AppCompatActivity {
                                         public void run() {
                                             startActivityForResult(speechIntent, 24);
                                         }
-                                    }, 7000);
+                                    }, 5000);
                                 }
                                 else {
                                     speak("Passwords did not match. Please say the password again");

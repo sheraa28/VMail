@@ -231,7 +231,11 @@ public class ComposeActivity extends AppCompatActivity {
                 ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                 if(result.get(0).equals("cancel"))
                 {
-                    speak("Cancelled");
+                    speak("Cancelled , going back to dashboard");
+                    Intent i = new Intent(this, DashActivity.class);
+                    startActivity(i);
+                }else if (result.get(0).equals("restart")){
+                    speak("restarting");
                     restartActivity();
                 }
                 else {
@@ -278,8 +282,11 @@ public class ComposeActivity extends AppCompatActivity {
                         case 3:
                             Message.setText(result.get(0));
                             status.setText("Confirm?");
-                            speak("Please Confirm the mail\n To : " + To.getText().toString() + "\nSubject : " + Subject.getText().toString() + "\nMessage : " + Message.getText().toString() + "\nSpeak Yes to confirm OR No to compose the mail again");
+                            speak("Please Confirm the mail\n To : " + To.getText().toString() +
+                                    "\nSubject : " + Subject.getText().toString() + "\nMessage : " +
+                                    Message.getText().toString() + "\nSpeak Yes to confirm OR No to compose the mail again");
                             startActivityForResult( speechIntent,4);
+
                             break;
                         case 4:
                             if(result.get(0).equals("yes"))
