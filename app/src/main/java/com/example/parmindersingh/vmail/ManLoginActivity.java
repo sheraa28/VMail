@@ -5,9 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -23,8 +23,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ManLoginActivity extends AppCompatActivity{
-
+public class ManLoginActivity extends AppCompatActivity {
 
 
     // UI references.
@@ -56,50 +55,52 @@ public class ManLoginActivity extends AppCompatActivity{
             }
         });
 
-            //mLoginFormView = findViewById(R.id.login_form);
-            mProgressView = findViewById(R.id.login_progress);
+        //mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
 
-            Intent intent = getIntent();
-            if (intent.hasExtra("username")) {
-                emailEditText.setText(intent.getStringExtra("username"));
-            }
-            if (intent.hasExtra("password")) {
-                passEditText.setText(intent.getStringExtra("password"));
-            }
+        Intent intent = getIntent();
+        if (intent.hasExtra("username")) {
+            emailEditText.setText(intent.getStringExtra("username"));
+        }
+        if (intent.hasExtra("password")) {
+            passEditText.setText(intent.getStringExtra("password"));
+        }
 
         String userEmail = emailEditText.getText().toString().trim();
-        String userPassword =passEditText.getText().toString().trim();
+        String userPassword = passEditText.getText().toString().trim();
 
-        if(!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword)){
+        if (!TextUtils.isEmpty(userEmail) && !TextUtils.isEmpty(userPassword)) {
             attemptLogin();
 
         }
     }
-    private void config(){
+
+    private void config() {
 
         String userEmail = emailEditText.getText().toString().trim();
-        String userPassword =passEditText.getText().toString().trim();
+        String userPassword = passEditText.getText().toString().trim();
 
 
-        SharedPreferences sp=getSharedPreferences("Login", 0);
-        SharedPreferences.Editor Ed=sp.edit();
-        Ed.putString("Unm",userEmail);
-        Ed.putString("Psw",userPassword);
+        SharedPreferences sp = getSharedPreferences("Login", 0);
+        SharedPreferences.Editor Ed = sp.edit();
+        Ed.putString("Unm", userEmail);
+        Ed.putString("Psw", userPassword);
         Ed.commit();
 
 
     }
+
     public void attemptLogin() {
         config();
         String userEmail = emailEditText.getText().toString().trim();
-        String userPassword =passEditText.getText().toString().trim();
-        if(TextUtils.isEmpty(userEmail)){
-            Toast.makeText(this,"Please enter email",Toast.LENGTH_LONG).show();
+        String userPassword = passEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(userEmail)) {
+            Toast.makeText(this, "Please enter email", Toast.LENGTH_LONG).show();
             return;
         }
 
-        if(TextUtils.isEmpty(userPassword)){
-            Toast.makeText(this,"Please enter password",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(userPassword)) {
+            Toast.makeText(this, "Please enter password", Toast.LENGTH_LONG).show();
             return;
         }
         final ProgressDialog progressDialog = ProgressDialog.show(ManLoginActivity.this, "Please wait...", "Proccessing...", true);
@@ -123,10 +124,6 @@ public class ManLoginActivity extends AppCompatActivity{
                     }
                 });
     }
-
-
-
-
 
 
     public void register(View view) {

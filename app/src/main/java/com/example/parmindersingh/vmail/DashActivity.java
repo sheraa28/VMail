@@ -1,14 +1,12 @@
 package com.example.parmindersingh.vmail;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -17,9 +15,9 @@ import java.util.Locale;
 
 public class DashActivity extends AppCompatActivity {
 
-    private TextToSpeech tts;
     Intent speechIntent;
-    private ImageButton composeBtn,inboxBtn,sentMailBtn,trashBtn;
+    private TextToSpeech tts;
+    private ImageButton composeBtn, inboxBtn, sentMailBtn, trashBtn;
 
     public void compose() {
 
@@ -27,7 +25,8 @@ public class DashActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-    public void inbox(){
+
+    public void inbox() {
 
         Intent intent = new Intent(this, InboxActivity.class);
         startActivity(intent);
@@ -41,10 +40,10 @@ public class DashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dash);
 
-        composeBtn = (ImageButton)findViewById(R.id.composeBtn);
-        inboxBtn = (ImageButton)findViewById(R.id.inboxBtn);
-        sentMailBtn=(ImageButton)findViewById(R.id.sentMailBtn);
-        trashBtn= (ImageButton)findViewById(R.id.trashBtn);
+        composeBtn = (ImageButton) findViewById(R.id.composeBtn);
+        inboxBtn = (ImageButton) findViewById(R.id.inboxBtn);
+        sentMailBtn = (ImageButton) findViewById(R.id.sentMailBtn);
+        trashBtn = (ImageButton) findViewById(R.id.trashBtn);
 
         composeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
 
 
 //Class is extending AsyncTask because this class is going to perform a networking operation
-public class SendMail extends AsyncTask<Void,Void,Void> {
+public class SendMail extends AsyncTask<Void, Void, Void> {
 
     //Declaring Variables
     private Context context;
@@ -42,7 +42,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
     //Class Constructor
     public SendMail(Context context, String userEmail, String userPassword,
-                    String email, String subject, String message){
+                    String email, String subject, String message) {
         //Initializing variables
         this.context = context;
         this.userEmail = userEmail;
@@ -53,7 +53,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         t1 = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
+                if (status != TextToSpeech.ERROR) {
                     t1.setLanguage(Locale.UK);
                 }
             }
@@ -65,7 +65,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         //Showing progress dialog while sending email
-        progressDialog = ProgressDialog.show(context,"Sending message","Please wait...",false,false);
+        progressDialog = ProgressDialog.show(context, "Sending message", "Please wait...", false, false);
 
     }
 
@@ -75,7 +75,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
         //Dismissing the progress dialog
         progressDialog.dismiss();
         //Showing a success message
-        Toast.makeText(context,"Message Sent",Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Message Sent", Toast.LENGTH_LONG).show();
         t1.speak("Message Sent", TextToSpeech.QUEUE_FLUSH, null);
     }
 
