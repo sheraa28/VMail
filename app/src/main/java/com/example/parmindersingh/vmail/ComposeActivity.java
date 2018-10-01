@@ -251,13 +251,13 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
                             public void run() {
                                 speak("What should be the subject? ");
                             }
-                        }, 3000);
+                        }, 5000);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 startActivityForResult(speechIntent, 2);
                             }
-                        }, 5000);
+                        }, 7000);
                         break;
                     case 2:
                         Subject.setText(result.get(0));
@@ -307,7 +307,7 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
                 }
             }
         }
-//anx
+
     }
 
     @Override
@@ -315,7 +315,8 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
 
         if (utteranceId.equals("MESSAGE_DONE")) {
             startActivityForResult(speechIntent, 4);
+            Log.i("Check 1","Successful");
         }
-
+        Log.i("Check 2","Successful");
     }
 }
