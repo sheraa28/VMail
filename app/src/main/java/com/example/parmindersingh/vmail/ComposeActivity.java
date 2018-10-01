@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -18,18 +18,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 
 
-public class ComposeActivity extends AppCompatActivity {
+public class ComposeActivity extends AppCompatActivity implements TextToSpeech.OnUtteranceCompletedListener {
 
     private TextToSpeech tts;
     private TextView status;
-    private TextView To,Subject,Message;
+    private TextView To, Subject, Message;
     private int numberOfClicks;
     private Layout linearLayout;
     Intent speechIntent;
@@ -57,11 +58,11 @@ public class ComposeActivity extends AppCompatActivity {
             }
         });
 
-        status = (TextView)findViewById(R.id.status);
+        status = (TextView) findViewById(R.id.status);
         To = (TextView) findViewById(R.id.to);
-        Subject  =(TextView)findViewById(R.id.subject);
+        Subject = (TextView) findViewById(R.id.subject);
         Message = (TextView) findViewById(R.id.message);
-        sendButton =(Button)findViewById(R.id.send);
+        sendButton = (Button) findViewById(R.id.send);
         //linearLayout layout = (LinearLayout) findViewById(linearLayout);
         numberOfClicks = 0;
 
@@ -87,32 +88,32 @@ public class ComposeActivity extends AppCompatActivity {
         });
     }
 
-    public void type (View view){
+    public void type(View view) {
 
-     type = (TextView)findViewById(R.id.edtType);
-      String Type = type.getText().toString();
+        type = (TextView) findViewById(R.id.edtType);
+        String Type = type.getText().toString();
 
-      if (Type.equals("TYPE")) {
-        sendButton.setOnClickListener(null);
-         type.setText("SPEAK");
-          Toast.makeText(this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
-      }else {
-          sendButton.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
-                  layoutClicked();
-              }
-          });
-          type.setText("TYPE");
-      }
+        if (Type.equals("TYPE")) {
+            sendButton.setOnClickListener(null);
+            type.setText("SPEAK");
+            Toast.makeText(this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
+        } else {
+            sendButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    layoutClicked();
+                }
+            });
+            type.setText("TYPE");
+        }
 
     }
 
-    private void speak(String text){
+    private void speak(String text) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
-        }else{
+        } else {
             tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
         }
     }
@@ -126,7 +127,7 @@ public class ComposeActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public void speech(View view){
+    public void speech(View view) {
 
         //layoutClicked();
     }
@@ -151,8 +152,7 @@ public class ComposeActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    public void layoutClicked()
-    {
+    public void layoutClicked() {
         speak("tell me the email ID to whom you want to send mail");
         speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         speechIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -170,7 +170,7 @@ public class ComposeActivity extends AppCompatActivity {
         }
     }
 
-    private void listen(){
+    private void listen() {
         Intent i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
@@ -196,8 +196,8 @@ public class ComposeActivity extends AppCompatActivity {
         // And Pass them to this SendMail method
 
 
-        SharedPreferences sp1=this.getSharedPreferences("Login",0);
-        String unm=sp1.getString("Unm", null);
+        SharedPreferences sp1 = this.getSharedPreferences("Login", 0);
+        String unm = sp1.getString("Unm", null);
         String pass = sp1.getString("Psw", null);
         // Otherwise:
         // Stupid but quick way is to pass Email and Password through Intents
@@ -213,12 +213,11 @@ public class ComposeActivity extends AppCompatActivity {
         sm.execute();
     }
 
-    private void exitFromApp()
-    {
+    private void exitFromApp() {
         this.finishAffinity();
     }
 
-    public void restartActivity(){
+    public void restartActivity() {
         Intent mIntent = getIntent();
         finish();
         startActivity(mIntent);
@@ -227,87 +226,96 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-            if (resultCode == RESULT_OK && null != data) {
-                ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                if(result.get(0).equals("cancel"))
-                {
-                    speak("Cancelled , going back to dashboard");
-                    Intent i = new Intent(this, DashActivity.class);
-                    startActivity(i);
-                }else if (result.get(0).equals("restart")){
-                    speak("restarting");
-                    restartActivity();
-                }
-                else {
-                    switch (requestCode) {
-                        case 1:
-                            String to;
-                            to= result.get(0).replaceAll("underscore","_");
-                            to = to.replaceAll("\\s+","");
-                            //to= to + "@gmail.com";
-                            To.setText(to);
-                            //To.setText(((result.get(0)).replace(" ", "")).trim());
-                            status.setText("Subject?");
-                            speak("The email you entered is " + result.get(0));
+        if (resultCode == RESULT_OK && null != data) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (result.get(0).equals("cancel")) {
+                speak("Cancelled , going back to dashboard");
+                Intent i = new Intent(this, DashActivity.class);
+                startActivity(i);
+            } else if (result.get(0).equals("restart")) {
+                speak("restarting");
+                restartActivity();
+            } else {
+                switch (requestCode) {
+                    case 1:
+                        String to;
+                        to = result.get(0).replaceAll("underscore", "_");
+                        to = to.replaceAll("\\s+", "");
+                        //to= to + "@gmail.com";
+                        To.setText(to);
+                        //To.setText(((result.get(0)).replace(" ", "")).trim());
+                        status.setText("Subject?");
+                        speak("The email you entered is " + result.get(0));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                speak("What should be the subject? ");
+                            }
+                        }, 3000);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivityForResult(speechIntent, 2);
+                            }
+                        }, 5000);
+                        break;
+                    case 2:
+                        Subject.setText(result.get(0));
+                        status.setText("Message?");
+                        speak("The subject is " + result.get(0));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                speak("Give me message");
+                            }
+                        }, 4000);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                startActivityForResult(speechIntent, 3);
+                            }
+                        }, 5000);
+                        break;
+                    case 3:
+                        Message.setText(result.get(0));
+                        status.setText("Confirm?");
+
+                        HashMap<String, String> hashParam = new HashMap<String, String>();
+                        hashParam.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "MESSAGE_DONE");
+                        tts.speak("Please Confirm the mail\n To : " + To.getText().toString() +
+                                        "\nSubject : " + Subject.getText().toString() + "\nMessage : " +
+                                        Message.getText().toString() + "\nSpeak Yes to confirm OR No to compose the mail again",
+                                TextToSpeech.QUEUE_FLUSH, hashParam);
+
+
+                        break;
+                    case 4:
+                        if (result.get(0).equals("yes")) {
+                            status.setText("Sending");
+                            speak("Sending the mail");
+                            sendEmail();
+                        } else if (result.get(0).equals("No")) {
+                            status.setText("TO");
+                            speak("Tell me the mail address to whom yo want to send mail");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    speak("What should be the subject? ");
-                                }
-                            }, 3000);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startActivityForResult(speechIntent, 2);
-                                }
-                            }, 5000);
-                            break;
-                        case 2:
-                            Subject.setText(result.get(0));
-                            status.setText("Message?");
-                            speak("The subject is " + result.get(0));
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    speak("Give me message");
+                                    startActivityForResult(speechIntent, 1);
                                 }
                             }, 4000);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startActivityForResult(speechIntent, 3);
-                                }
-                            }, 5000);
-                            break;
-                        case 3:
-                            Message.setText(result.get(0));
-                            status.setText("Confirm?");
-                            speak("Please Confirm the mail\n To : " + To.getText().toString() +
-                                    "\nSubject : " + Subject.getText().toString() + "\nMessage : " +
-                                    Message.getText().toString() + "\nSpeak Yes to confirm OR No to compose the mail again");
-                            startActivityForResult( speechIntent,4);
-
-                            break;
-                        case 4:
-                            if(result.get(0).equals("yes"))
-                            {
-                                status.setText("Sending");
-                                speak("Sending the mail");
-                                sendEmail();
-                            }else if (result.get(0).equals("No"))
-                            {
-                                status.setText("TO");
-                                speak("Tell me the mail address to whom yo want to send mail");
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivityForResult(speechIntent,1);
-                                    }
-                                }, 4000);
-                            }
-                    }
+                        }
                 }
             }
+        }
 //anx
+    }
+
+    @Override
+    public void onUtteranceCompleted(String utteranceId) {
+
+        if (utteranceId.equals("MESSAGE_DONE")) {
+            startActivityForResult(speechIntent, 4);
+        }
+
     }
 }
