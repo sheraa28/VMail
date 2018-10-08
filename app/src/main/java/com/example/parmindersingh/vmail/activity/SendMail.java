@@ -1,4 +1,4 @@
-package com.example.parmindersingh.vmail;
+package com.example.parmindersingh.vmail.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;

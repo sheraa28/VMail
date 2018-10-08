@@ -1,38 +1,36 @@
-package com.example.parmindersingh.vmail;
+package com.example.parmindersingh.vmail.activity;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.parmindersingh.vmail.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
 
-public class ComposeActivity extends AppCompatActivity implements TextToSpeech.OnUtteranceCompletedListener {
+public class ComposeActivity extends AppCompatActivity {
 
     private TextToSpeech tts;
     private TextView status;
     private TextView To, Subject, Message;
     private int numberOfClicks;
-    private Layout linearLayout;
+    private LinearLayout linearLayout;
     Intent speechIntent;
     private TextView type;
     private Button sendButton;
@@ -63,7 +61,7 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
         Subject = (TextView) findViewById(R.id.subject);
         Message = (TextView) findViewById(R.id.message);
         sendButton = (Button) findViewById(R.id.send);
-        //linearLayout layout = (LinearLayout) findViewById(linearLayout);
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         numberOfClicks = 0;
 
         speechIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -83,6 +81,13 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendEmail();
+            }
+        });
+
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 layoutClicked();
             }
         });
@@ -95,6 +100,7 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
 
         if (Type.equals("TYPE")) {
             sendButton.setOnClickListener(null);
+            linearLayout.setOnClickListener(null);
             type.setText("SPEAK");
             Toast.makeText(this, "Manual Typing Enabled!", Toast.LENGTH_SHORT).show();
         } else {
@@ -105,6 +111,12 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
                 }
             });
             type.setText("TYPE");
+            linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    layoutClicked();
+                }
+            });
         }
 
     }
@@ -127,30 +139,6 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
         super.onDestroy();
     }
 
-    public void speech(View view) {
-
-        //layoutClicked();
-    }
-
-    // Tap outside of components to remove focus
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(
-                            Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    layoutClicked();
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
-    }
 
     public void layoutClicked() {
         speak("tell me the email ID to whom you want to send mail");
@@ -287,6 +275,26 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
                                         Message.getText().toString() + "\nSpeak Yes to confirm OR No to compose the mail again",
                                 TextToSpeech.QUEUE_FLUSH, hashParam);
 
+                        tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                            @Override
+                            public void onStart(String utteranceId) {
+
+                            }
+
+                            @Override
+                            public void onDone(String utteranceId) {
+                                if (utteranceId.equals("MESSAGE_DONE")) {
+                                    startActivityForResult(speechIntent, 4);
+                                    Log.i("Check 1","Successful");
+                                }
+                                Log.i("Check 2","Successful");
+                            }
+
+                            @Override
+                            public void onError(String utteranceId) {
+
+                            }
+                        });
 
                         break;
                     case 4:
@@ -310,13 +318,4 @@ public class ComposeActivity extends AppCompatActivity implements TextToSpeech.O
 
     }
 
-    @Override
-    public void onUtteranceCompleted(String utteranceId) {
-
-        if (utteranceId.equals("MESSAGE_DONE")) {
-            startActivityForResult(speechIntent, 4);
-            Log.i("Check 1","Successful");
-        }
-        Log.i("Check 2","Successful");
-    }
 }

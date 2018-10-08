@@ -1,4 +1,4 @@
-package com.example.parmindersingh.vmail;
+package com.example.parmindersingh.vmail.activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +9,8 @@ import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.parmindersingh.vmail.R;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -26,11 +28,11 @@ public class DashActivity extends AppCompatActivity {
 
     }
 
-    public void inbox() {
-
-        Intent intent = new Intent(this, InboxActivity.class);
-        startActivity(intent);
-    }
+//    public void inbox() {
+//
+//        Intent intent = new Intent(this, InboxActivity.class);
+//        startActivity(intent);
+//    }
 
    /* SharedPreferences sp1 = this.getSharedPreferences("Register",0);
     String username = sp1.getString("username", null);*/
@@ -52,12 +54,12 @@ public class DashActivity extends AppCompatActivity {
             }
         });
 
-        inboxBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inbox();
-            }
-        });
+//        inboxBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                inbox();
+//            }
+//        });
 
         tts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override

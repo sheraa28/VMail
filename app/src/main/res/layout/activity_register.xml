@@ -8,7 +8,7 @@
     android:padding="20dp"
     android:scrollbarAlwaysDrawHorizontalTrack="false"
     android:scrollbarAlwaysDrawVerticalTrack="false"
-    tools:context=".RegisterActivity">
+    tools:context=".activity.RegisterActivity">
 
     <TextView
         android:layout_width="347dp"

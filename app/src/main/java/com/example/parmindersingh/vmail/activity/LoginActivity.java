@@ -1,4 +1,4 @@
-package com.example.parmindersingh.vmail;
+package com.example.parmindersingh.vmail.activity;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.parmindersingh.vmail.R;
 
 import java.util.ArrayList;
 import java.util.Locale;

@@ -1,4 +1,4 @@
-package com.example.parmindersingh.vmail;
+package com.example.parmindersingh.vmail.activity;
 
 
 import android.app.ProgressDialog;
@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.parmindersingh.vmail.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
